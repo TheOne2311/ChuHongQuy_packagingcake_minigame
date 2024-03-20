@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class PlayBtn : MonoBehaviour
 {
     [SerializeField] Button Play;
-    public int sceneid;
     public void Start()
     {
         Play.onClick.AddListener(OpenMain);
     }
 
-    void OpenMain()
+    //To open the Main 
+    public void OpenMain()
     {
-        SceneManager.LoadScene(sceneid);
+        SceneManager.LoadScene(1);
     }
 }
