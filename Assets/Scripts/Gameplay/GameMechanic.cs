@@ -18,7 +18,8 @@ public class GameMechanic : MonoBehaviour
 
     }
 
-    private Vector2 Direction = Vector2.zero;
+    private Vector2 DirectionP = Vector2.zero;
+    private Vector2 DirectionC = Vector2.zero;
         private void OnEnable()
     {
         swipeListener.OnSwipe.AddListener(OnSwipe);
@@ -27,21 +28,28 @@ public class GameMechanic : MonoBehaviour
 
     private void OnSwipe(string swipe)
     {
-        if (Direction == Vector2.zero)
+        if (DirectionP == Vector2.zero || DirectionC == Vector2.zero)
         {
             switch (swipe)
             {
                 case "Left":
-                    Direction = Vector2.left;
+                    DirectionP = Vector2.left;
+                    DirectionC = Vector2.left;
                     break;
                 case "Right":
-                    Direction = Vector2.right;
+                    DirectionP = Vector2.right;
+                    DirectionC = Vector2.right;
+
                     break;
                 case "Up":
-                    Direction = Vector2.up;
+                    DirectionP = Vector2.up;
+                    DirectionC = Vector2.up;
+
                     break;
                 case "Down":
-                    Direction = Vector2.down;
+                    DirectionP = Vector2.down;
+                    DirectionC = Vector2.down;
+
                     break;
             }
         }
@@ -50,8 +58,8 @@ public class GameMechanic : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        P.position += (Vector3)Direction * Speed * Time.deltaTime;
-        C.position += (Vector3)Direction * Speed * Time.deltaTime;
+        P.position += (Vector3)DirectionP * Speed * Time.deltaTime;
+        C.position += (Vector3)DirectionC * Speed * Time.deltaTime;
 
     }
 
@@ -61,10 +69,17 @@ public class GameMechanic : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "C" || collision.gameObject.tag == "P")
+        if (collision.gameObject.tag == "P")
         {
-            Debug.Log("Collision!!");
+            DirectionP = Vector2.zero;
+
         }
-        Direction = Vector2.zero;
+        if (collision.gameObject.tag == "C")
+        {
+            DirectionC = Vector2.zero;
+
+        }
     }
+
+    //How to lose/win*/
 }

@@ -7,23 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] Button Home, Replay;
     [SerializeField] TextMeshProUGUI timer;
     public float remainingtime;
-    [SerializeField] GameObject LevelFail, LevelWin;
-    bool Solved;
-   
-    private void Awake()
-    {
-        Home.onClick.AddListener(Main);
-        Replay.onClick.AddListener(Reset);
-    }
-
-
+    public GameObject LevelFail, LevelWin;
+    public GameObject P, C, Cd;
+    private GameObject[] objects;
     
     void Update()
     {
-
+        objects = GameObject.FindGameObjectsWithTag("Cd");
         if (remainingtime >0)
         {
             remainingtime -= Time.deltaTime;
@@ -33,16 +25,18 @@ public class UI : MonoBehaviour
         {
             remainingtime = 0;
         }
-
-        if (remainingtime == 0 && Solved ==true)
+        if (remainingtime == 0)
         {
-            LevelWin.SetActive(true);
+            Destroy(P);
+            Destroy(C);
+            for (int i = 0; i < objects.Length; i++)
+            {
+                Object.Destroy (objects[i]);
+            }
+            LevelFail.SetActive(true);
         }
 
-        else if (remainingtime == 0 && Solved ==false)
-        {
-            LevelFail.SetActive(false);
-        }
+
     }
     public void Reset()
     {
